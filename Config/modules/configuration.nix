@@ -4,12 +4,13 @@
 
 { self, inputs, ... }: {
 
-  flake.nixosModules.Config = { pkgs, lib, ... }: {
+  flake.nixosModules.Config = { inputs, pkgs, lib, ... }: {
   imports =
     [ # Include the results of the hardware scan.
       self.nixosModules.Hardware
       self.nixosModules.BasicPackages
       self.nixosModules.niri
+      # self.nixosModules.Nixvim
     ];
 
   # Bootloader.
@@ -52,12 +53,23 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  services.displayManager = {
+    enable = true;
+    sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
+  };
+
+  programs.zsh.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.filya = {
     isNormalUser = true;
     description = "Filya";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    shell = pkgs.zsh;
   };
 
   # Allow unfree packages

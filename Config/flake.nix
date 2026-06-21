@@ -6,6 +6,8 @@
     wrappers.url = "github:Lassulus/wrappers";
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
     import-tree.url = "github:vic/import-tree";
+
+    nixvim.url = "github:nix-community/nixvim";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake
